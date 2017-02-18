@@ -4,14 +4,14 @@ import Vue from 'vue'
 import App from './Home'
 import $ from 'jquery'
 
-var counter=1;
-var getRandomColor = function(){    
-  var str='#'
-  for(var i=0;i<6;i++){
-    str+='0123456789abcdef'[Math.floor(Math.random()*16)]
+var counter = 1;
+var getRandomColor = function () {
+  var str = '#'
+  for (var i = 0; i < 6; i++) {
+    str += '0123456789abcdef' [Math.floor(Math.random() * 16)]
   }
   return str
-} 
+}
 class Navigator {
 
   constructor(el) {
@@ -24,28 +24,42 @@ class Navigator {
     div.className = 'x-page x-page-current'
     var vm = new Vue(obj)
     vm.$mount()
-    vm.msg=counter++
-    vm.color=getRandomColor()
+    vm.msg = counter++
+      vm.color = getRandomColor()
     div.appendChild(vm.$el)
     var $newView = $(div);
-   
+
+    var end = 0
+
+    function onEnd() {
+      if (end === 2) {
+        $newView.removeClass('pt-page-moveFromRight')
+        $newView.children('.x-mask').remove()
+        preViews.removeClass('x-page-current')
+        preViews.removeClass('pt-page-moveToLeft')
+        preViews.css('transform','translateX(-50%)')
+      }
+
+    }
+
     //如果是第一个view就不增加动画也没有mask
 
     if (views.length > 0) {
-      var mask=document.createElement('div')
-      mask.className='x-mask'
+      var mask = document.createElement('div')
+      mask.className = 'x-mask'
       div.appendChild(mask)
       $newView.on('animationend', function () {
-        $newView.removeClass('pt-page-moveFromRight')
-        $newView.children('.x-mask').remove()
+        end++
+        onEnd()
         $newView.off('animationend')
+       
       })
       $newView.addClass('pt-page-moveFromRight')
-      let preViews = $(views[views.length - 1])
+      var preViews = $(views[views.length - 1])
       preViews.addClass('pt-page-moveToLeft')
       preViews.on('animationend', function () {
-        preViews.removeClass('x-page-current')
-        preViews.removeClass('pt-page-moveToLeft')
+        end++
+        onEnd()
         preViews.off('animationend')
       })
     }
@@ -59,23 +73,34 @@ class Navigator {
     if (views.length < 2) {
       return false;
     }
+    var end = 0;
 
+    function onEnd() {
+      if (end === 2) {
+        current.remove();
+        preViews.removeClass('pt-page-moveFromLeft')
+       
+      }
 
+    }
     var current = $(views.pop())
     current.on('animationend', function () {
       current.off('animationend')
-      current.remove();
+      end++
+      onEnd()
     })
     current.addClass('pt-page-moveToRight')
     var preViews = $(views[views.length - 1])
- 
-    
-     preViews.addClass('pt-page-moveFromLeft')
-    preViews.addClass('x-page-current')
+
+
+    preViews.addClass('x-page-current pt-page-moveFromLeft')
+// preViews.addClass('x-page-current')
     preViews.on('animationend', function () {
-        preViews.removeClass('pt-page-moveFromLeft')
-        preViews.off('animationend')
-      })
+      end++
+      onEnd()
+       preViews.css('transform','translateX(0%)')
+      preViews.off('animationend')
+    })
   }
 }
 window.nav = new Navigator(document.getElementById('app'))

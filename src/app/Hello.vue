@@ -1,7 +1,7 @@
 <template>
   <div class="hello" :style="{backgroundColor:color}">
       
-      <button style="margin-top:30px;" @click="gotoNext">下一页</button>
+      <button style="float:right" @click="gotoNext">下一页</button>
       <button @click="back">back</button>
 
         <h1>{{msg}}</h1>
@@ -40,5 +40,6 @@ h1{
 button{
   padding:15px;
   font-size:18px;
+  margin:15px;
 }
 </style>

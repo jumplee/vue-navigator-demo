@@ -45,7 +45,7 @@
       bottom:0;
       left:0;
       right:0;
-      background:rgba(0,0,0,.1);
+      background:rgba(255,255,255,.0);
       z-index:999;
     }
 .pt-page-moveToLeft {
@@ -82,11 +82,10 @@
 	to { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
 }
 
-@-webkit-keyframes moveFromLeft {
-	from { -webkit-transform: translateX(-100%); }
-}
+
 @keyframes moveFromLeft {
-	from { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+	from { transform: translateX(-50%); }
+  to {transform: translateX(0%); }
 }
 
 @-webkit-keyframes moveToRight { 
