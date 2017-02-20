@@ -16,7 +16,10 @@ module.exports = merge(baseWebpackConfig, {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
   },
   // cheap-module-eval-source-map is faster for development
-  devtool: '#cheap-module-eval-source-map',
+  // devtool: '#cheap-module-eval-source-map',
+  //默认的sourcemap生成方式会导致google浏览器断点和源文件查看有问题！
+  //https://github.com/webpack/webpack/issues/2145
+   devtool: '#inline-source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env': config.dev.env
