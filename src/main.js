@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './Home'
 import $ from 'jquery'
-
+import Hammer from 'hammerjs'
 var counter = 1;
 var getRandomColor = function () {
   var str = '#'
@@ -17,6 +17,10 @@ class Navigator {
   constructor(el) {
     this.element = el
     this.views = []
+    var hammertime = new Hammer(el, {})
+    hammertime.on('panright', function (ev) {
+      console.log(ev)
+    });
   }
   push(obj) {
     var views = this.views
@@ -37,7 +41,7 @@ class Navigator {
         $newView.children('.x-mask').remove()
         preViews.removeClass('x-page-current')
         preViews.removeClass('pt-page-moveToLeft')
-        preViews.css('transform','translateX(-50%)')
+        // preViews.css('transform','translateX(-50%)')
       }
 
     }
@@ -52,7 +56,7 @@ class Navigator {
         end++
         onEnd()
         $newView.off('animationend')
-       
+
       })
       $newView.addClass('pt-page-moveFromRight')
       var preViews = $(views[views.length - 1])
@@ -79,7 +83,7 @@ class Navigator {
       if (end === 2) {
         current.remove();
         preViews.removeClass('pt-page-moveFromLeft')
-       
+
       }
 
     }
@@ -94,11 +98,11 @@ class Navigator {
 
 
     preViews.addClass('x-page-current pt-page-moveFromLeft')
-// preViews.addClass('x-page-current')
+    // preViews.addClass('x-page-current')
     preViews.on('animationend', function () {
       end++
       onEnd()
-       preViews.css('transform','translateX(0%)')
+      //  preViews.css('transform','translateX(0%)')
       preViews.off('animationend')
     })
   }
