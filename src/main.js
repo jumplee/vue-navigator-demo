@@ -15,12 +15,36 @@ var getRandomColor = function () {
 class Navigator {
 
   constructor(el) {
-    this.element = el
-    this.views = []
-    var hammertime = new Hammer(el, {})
-    hammertime.on('panright', function (ev) {
+    var self=this
+    self.element = el
+    self.views = []
+    self.panFromLeft=false
+    var hammer=new Hammer.Manager(el)
+    self.hammer = hammer
+    hammer.add(new Hammer.Pan({
+      direction: Hammer.DIRECTION_HORIZONTAL,
+      threshold: 10
+    }));
+    hammer.on('panstart', Hammer.bindFn(this.onPanStart, this))
+    hammer.on("panmove panend pancancel", Hammer.bindFn(this.onPan, this));
+    hammer.on("panend pancancel", Hammer.bindFn(this.onPanEnd, this));
+  }
+  onPanStart(ev){
+    //左侧小于50范围内可以拖拽
+    if(ev.pointers.length===1){
+      let x=ev.pointers[0].x
+      if(x<50){
+        this.panFromLeft=true
+      }
+    }
+  }
+  onPan(ev){
+    if(this.panFromLeft){
       console.log(ev)
-    });
+    }
+  }
+  onPanEnd(ev){
+    this.panFromLeft=false
   }
   push(obj) {
     var views = this.views
