@@ -2,7 +2,7 @@
   <div class="hello" :style="{backgroundColor:color}">
       
       <button style="float:right" @click="gotoNext">下一页</button>
-      <button @click="back">back</button>
+      <button @click="back">返回</button>
 
         <h1>{{msg}}</h1>
   </div>

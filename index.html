@@ -32,11 +32,13 @@
  
   z-index:1;
   	transform: translate3d(0, 0, 0);
-    transition: transform .3s;
+    
     /*transform-style: preserve-3d;*/
      /*backface-visibility: hidden;*/
     }
-    
+.x-page.anim{
+  transition: transform .3s;
+}    
     .x-page.x-page-current{
       visibility: visible;
     }
@@ -50,7 +52,8 @@
       z-index:999;
     }
 .pt-page-moveToLeft {
-	animation: moveToLeft 1s cubic-bezier(0.26, 0.52, 0.97, 0.47) both;
+	/*animation: moveToLeft 1s cubic-bezier(0.26, 0.52, 0.97, 0.47) both;*/
+  animation: moveToLeft 1s ease both;
 }
 
 .pt-page-moveFromLeft {
@@ -102,7 +105,13 @@
 	from { -webkit-transform: translateX(100%); }
 }
 @keyframes moveFromRight {
-	from { -webkit-transform: translateX(100%); transform: translateX(100%); }
+	from { 
+    -webkit-transform: translateX(100%); 
+    transform: translateX(100%);
+  }
+  to{
+    transform:translateX(0%)
+  }
 }
   </style>
 </head>
