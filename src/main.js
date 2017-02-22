@@ -48,7 +48,7 @@ class Navigator {
         console.log('pan动画没有执行完')
         return false
     }
-    
+
     //左侧小于50范围内可以拖拽，且第一屏页面不需要处理
     if (this.views.length>1 && x < 50) {
         this.panFromLeft = true
@@ -110,11 +110,11 @@ class Navigator {
       } else {
         //取消pan或者移动小于百分之30恢复原状
         currentView.style.transform = 'translateX(0)'
-        beforeView.style.transform = 'translateX(-100px)'
+        beforeView.style.transform = 'translateX(0)'
       }
       setTimeout(onEnd, 500)
     }
-   
+
   }
   push(obj) {
     var self=this, views = self.views,vm = new Vue(obj),
@@ -152,7 +152,7 @@ class Navigator {
         $newView.off('animationend')
 
       })
-      
+
       $newView.addClass('pt-page-moveFromRight')
       var preViews = $(views[views.length - 1])
       preViews.addClass('pt-page-moveToLeft')

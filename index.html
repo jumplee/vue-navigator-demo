@@ -4,41 +4,40 @@
 <head>
   <meta charset="utf-8">
   <title>vue-navigator-demo</title>
-  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1.0,maximum-scale=1.0">
   <style>
     html,
     body {
       height: 100%;
       margin: 0;
     }
-    
+
     .x-pages {
       position: relative;
       width: 100%;
       height: 100%;
- 
+
       /*perspective: 1200px;*/
     }
-    
+
     .x-page {
       box-sizing:border-box;
       width: 100%;
       height: 100%;
       position: absolute;
-  visibility: hidden;
-	overflow: hidden;
-  top: 0;
-	left: 0;
- 
-  z-index:1;
-  	transform: translate3d(0, 0, 0);
-    
-    /*transform-style: preserve-3d;*/
-     /*backface-visibility: hidden;*/
+      visibility: hidden;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+      z-index:1;
+      transform: translateX(0);
+
+      /*transform-style: preserve-3d;*/
+      /*backface-visibility: hidden;*/
     }
-.x-page.anim{
-  transition: transform .3s;
-}    
+    .x-page.anim{
+      transition: transform .3s;
+    }
     .x-page.x-page-current{
       visibility: visible;
     }
@@ -51,74 +50,85 @@
       background:rgba(255,255,255,.0);
       z-index:999;
     }
-.pt-page-moveToLeft {
-	/*animation: moveToLeft 1s cubic-bezier(0.26, 0.52, 0.97, 0.47) both;*/
-  animation: moveToLeft 1s ease both;
-}
+    .pt-page-moveToLeft {
+      /*animation: moveToLeft 1s cubic-bezier(0.26, 0.52, 0.97, 0.47) both;*/
+      -webkit-animation: moveToLeft .6s ease both;
+      animation: moveToLeft .6s ease both;
+    }
+    .pt-page-moveFromRight {
+      /*-webkit-animation: moveFromRight .6s cubic-bezier(0, 0.39, 0.25, 1) both;*/
+      /*animation: moveFromRight .6s cubic-bezier(0, 0.39, 0.25, 1) both;*/
+      -webkit-animation: moveFromRight .6s ease both;
+      animation: moveFromRight .6s ease both;
+    }
 
-.pt-page-moveFromLeft {
-	-webkit-animation: moveFromLeft .6s ease both;
-	animation: moveFromLeft .6s ease both;
-}
+    .pt-page-moveFromLeft {
+      -webkit-animation: moveFromLeft .6s ease both;
+      animation: moveFromLeft .6s ease both;
+    }
 
-.pt-page-moveToRight {
-	-webkit-animation: moveToRight .6s ease both;
-	animation: moveToRight .6s ease both;
-}
-
-.pt-page-moveFromRight {
-  -webkit-animation: moveFromRight .6s cubic-bezier(0, 0.39, 0.25, 1) both;
-	animation: moveFromRight .6s cubic-bezier(0, 0.39, 0.25, 1) both;
-  	animation: moveFromRight .6s ease both;
-}
-
-
-/********************************* keyframes **************************************/
-
-/* move from / to  */
-
-@-webkit-keyframes moveToLeft {
-	from { }
-	to { -webkit-transform: translateX(-100%); }
-}
-@keyframes moveToLeft {
-	from { }
-	to { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
-}
+    .pt-page-moveToRight {
+      -webkit-animation: moveToRight .6s ease both;
+      animation: moveToRight .6s ease both;
+    }
 
 
-@keyframes moveFromLeft {
-	from { transform: translateX(-50%); }
-  to {transform: translateX(0%); }
-}
 
-@-webkit-keyframes moveToRight { 
-	from { }
-	to { -webkit-transform: translateX(100%); }
-}
-@keyframes moveToRight { 
-	from { }
-	to { -webkit-transform: translateX(100%); transform: translateX(100%); }
-}
 
-@-webkit-keyframes moveFromRight {
-	from { -webkit-transform: translateX(100%); }
-}
-@keyframes moveFromRight {
-	from { 
-    -webkit-transform: translateX(100%); 
-    transform: translateX(100%);
-  }
-  to{
-    transform:translateX(0%)
-  }
-}
+    /********************************* keyframes **************************************/
+
+    /* move from / to  */
+
+    @-webkit-keyframes moveToLeft {
+      from { }
+      to { -webkit-transform: translateX(-100%); }
+    }
+    @keyframes moveToLeft {
+      from { }
+      to { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+    }
+
+
+    @keyframes moveFromLeft {
+      from { transform: translateX(-50%); }
+      to {transform: translateX(0%); }
+    }
+
+    @-webkit-keyframes moveToRight {
+      from { }
+      to { -webkit-transform: translateX(100%); }
+    }
+    @keyframes moveToRight {
+      from { }
+      to { -webkit-transform: translateX(100%); transform: translateX(100%); }
+    }
+
+    @-webkit-keyframes moveFromRight {
+      from {
+        -webkit-transform: translateX(100%);
+        transform:translateX(100%)
+      }
+      to{
+        -webkit-transform: translateX(0%);
+        transform:translateX(0%)
+      }
+    }
+    @keyframes moveFromRight {
+      from {
+        -webkit-transform: translateX(100%);
+        transform: translateX(100%);
+      }
+      to{
+        -webkit-transform: translateX(0%);
+        transform:translateX(0%)
+      }
+    }
   </style>
 </head>
 
 <body>
 
-  <div id="app" class="x-pages"></div>
+<div id="app" class="x-pages"></div>
 
 
 </body>
