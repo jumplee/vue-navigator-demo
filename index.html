@@ -10,6 +10,8 @@
     body {
       height: 100%;
       margin: 0;
+      /*避免浏览器出现滚动条*／
+      overflow: hidden;
     }
 
     .x-pages {
@@ -21,7 +23,6 @@
     }
 
     .x-page {
-
       position: absolute;
       top: 0;
       left: 0;
@@ -51,15 +52,12 @@
       z-index:999;
     }
     .pt-page-moveToLeft {
-      animation:moveToLeft .4s ease both;
-      /*-webkit-animation: moveToLeft .6s ease both;*/
-      /*animation: moveToLeft .6s ease both;*/
+      /*animation:moveToLeft .6s cubic-bezier(0, 0.39, 0.25, 1) both;*/
+      animation: moveToLeft .4s cubic-bezier(0.1, 0.81, 1, 1) both;
     }
     .pt-page-moveFromRight {
-      /*-webkit-animation: moveFromRight .6s cubic-bezier(0, 0.39, 0.25, 1) both;*/
-      animation: moveFromRight .4s cubic-bezier(0, 0.39, 0.25, 1) both;
-      /*-webkit-animation: moveFromRight .6s ease both;
-      animation: moveFromRight .6s ease both;*/
+      /*animation: moveFromRight .6s cubic-bezier(0, 0.39, 0.25, 1) both;*/
+      animation: moveFromRight .4s cubic-bezier(0.1, 0.81, 1, 1) both;
     }
 
     .pt-page-moveFromLeft {
@@ -71,31 +69,31 @@
       -webkit-animation: moveToRight .6s ease both;
       animation: moveToRight .6s ease both;
     }
-
-
-
-
     /********************************* keyframes **************************************/
 
     /* move from / to  */
 
     @-webkit-keyframes moveToLeft {
       from {
-        -webkit-transform: translateX(0%); transform: translateX(0%);
+        -webkit-transform: translateX(0%);
       }
-      to { -webkit-transform: translateX(-40%); }
+      to { -webkit-transform: translateX(-100%); }
     }
     @keyframes moveToLeft {
       from {
-        -webkit-transform: translateX(0%); transform: translateX(0%);
+        transform: translateX(0%);
       }
-      to { -webkit-transform: translateX(-40%); transform: translateX(-40%); }
+      to { transform: translateX(-100%); }
     }
 
 
     @keyframes moveFromLeft {
-      from { transform: translateX(-50%); }
-      to {transform: translateX(0%); }
+      from {
+        transform: translateX(-50%);
+         }
+      to {
+        transform: translateX(0%);
+        }
     }
 
     @-webkit-keyframes moveToRight {

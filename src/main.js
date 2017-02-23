@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './Home'
 import $ from 'jquery'
 import Hammer from 'hammerjs'
+require('./util/modernizr-custom')
+
 var counter = 1;
 var getRandomColor = function () {
   var str = '#'
@@ -15,6 +17,15 @@ var getRandomColor = function () {
 Array.prototype.last = function () {
   return this[this.length - 1]
 }
+
+var animEndEventNames = {
+        'WebkitAnimation' : 'webkitAnimationEnd',
+        'OAnimation' : 'oAnimationEnd',
+        'msAnimation' : 'MSAnimationEnd',
+        'animation' : 'animationend'
+    }
+var animEndEventName= animEndEventNames[ Modernizr.prefixed( 'animation' ) ]
+
 class Navigator {
 
   constructor(el) {
@@ -148,19 +159,18 @@ class Navigator {
       var mask = document.createElement('div')
       mask.className = 'x-mask'
       div.appendChild(mask)
-      $newView.on('animationend', function () {
+      $newView.on(animEndEventName, function () {
         console.log('push1')
         end++
         onEnd()
-        $newView.off('animationend')
-
+        $newView.off(animEndEventName)
       })
       var preViews = $(views[views.length - 1])
-      preViews.on('animationend', function () {
+      preViews.on(animEndEventName, function () {
         console.log('push2')
         end++
         onEnd()
-        preViews.off('animationend')
+        preViews.off(animEndEventName)
       })
 
       setTimeout(function () {
@@ -191,20 +201,20 @@ class Navigator {
 
     }
     var current = $(views.pop())
-    current.on('animationend', function () {
+    current.on(animEndEventName, function () {
       console.log('pop1')
-      current.off('animationend')
+      current.off(animEndEventName)
       end++
       onEnd()
     })
     current.addClass('pt-page-moveToRight')
     var preViews = $(views[views.length - 1])
     preViews.addClass('x-page-current pt-page-moveFromLeft')
-    preViews.on('animationend', function () {
+    preViews.on(animEndEventName, function () {
       end++
       onEnd()
       console.log('pop2')
-      preViews.off('animationend')
+      preViews.off(animEndEventName)
     })
   }
 }
