@@ -41,20 +41,20 @@ class Navigator {
       return false
     }
 
-    var x = ev.pointers[0].x
+    var x = ev.pointers[0].x || ev.pointers[0].screenX 
     console.log('pan start---' + this.panFromLeft)
     //如果动画没有执行完,不接受任何新的手势逻辑
     if(!this.isPanAnimationEnd){
-        console.log('pan动画没有执行完')
-        return false
+      console.log('pan动画没有执行完')
+      return false
     }
 
     //左侧小于50范围内可以拖拽，且第一屏页面不需要处理
     if (this.views.length>1 && x < 50) {
-        this.panFromLeft = true
-        var beforeView = this.views[this.views.length - 2]
-        $(beforeView).addClass('x-page-current')
-        beforeView.style.transform = 'translateX(-100px)'
+      this.panFromLeft = true
+      var beforeView = this.views[this.views.length - 2]
+      $(beforeView).addClass('x-page-current')
+      beforeView.style.transform = 'translateX(-100px)'
     }
     console.log('pan start-end--' + this.panFromLeft)
   }
@@ -80,7 +80,7 @@ class Navigator {
     console.log('panend --' + this.panFromLeft)
     if (self.panFromLeft) {
       var delta = ev.deltaX
-      var percent = delta * 100 / screen.width
+      var percent = delta * 100 / document.body.clientWidth
       var views = self.views
       var viewsLen = views.length
       var currentView = views.last()
@@ -110,16 +110,19 @@ class Navigator {
       } else {
         //取消pan或者移动小于百分之30恢复原状
         currentView.style.transform = 'translateX(0)'
-        beforeView.style.transform = 'translateX(0)'
+        beforeView.style.transform = 'translateX(-100px)'
       }
       setTimeout(onEnd, 500)
     }
 
   }
   push(obj) {
-    var self=this, views = self.views,vm = new Vue(obj),
-    div = document.createElement('div')
-    div.className = 'x-page x-page-current'
+    var self=this, views = self.views,
+      vm = new Vue(obj),
+      className='x-page x-page-current',
+      div = document.createElement('div')
+
+    div.className='x-page'
     vm.$mount()
     vm.msg = counter++
     vm.color = getRandomColor()
@@ -152,16 +155,20 @@ class Navigator {
         $newView.off('animationend')
 
       })
-
-      $newView.addClass('pt-page-moveFromRight')
       var preViews = $(views[views.length - 1])
-      preViews.addClass('pt-page-moveToLeft')
       preViews.on('animationend', function () {
         console.log('push2')
         end++
         onEnd()
         preViews.off('animationend')
       })
+
+      setTimeout(function () {
+        div.className=className + ' pt-page-moveFromRight'
+        preViews.addClass('pt-page-moveToLeft')
+      },10)
+    }else{
+      div.className=className
     }
     //需要在最后执行
     views.push(div)
