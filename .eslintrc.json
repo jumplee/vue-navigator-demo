@@ -1,0 +1,24 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "extends": "vue",
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "rules": {
+        "curly":"error",
+        "eol-last":"warn",
+        "no-const-assign": "warn",
+        "no-this-before-super": "warn",
+        "no-undef": "warn",
+        "no-unreachable": "warn",
+        "no-unused-vars": "warn",
+        "constructor-super": "warn",
+        "valid-typeof": "warn"
+    }
+}
