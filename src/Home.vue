@@ -12,8 +12,8 @@ export default {
   components: {
     Hello
   },
-  methods:{
- 
+  methods: {
+
   }
 }
 </script>
