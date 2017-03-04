@@ -1,0 +1,9 @@
+@import "navigator";
+html,
+body {
+  height: 100%;
+  margin: 0;
+  // 避免浏览器出现滚动条
+  overflow: hidden;
+      -webkit-overflow-scrolling: touch;
+}

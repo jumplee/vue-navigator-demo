@@ -2,7 +2,7 @@
 import Vue from 'vue'
 import Hammer from 'hammerjs'
 require('./util/modernizr-custom')
-Array.prototype.last = function () {
+Array.prototype.last = function() {
   return this[this.length - 1]
 }
 
@@ -15,7 +15,7 @@ var animEndEventNames = {
 var animEndEventName = animEndEventNames[Modernizr.prefixed('animation')]
 export default class Navigator {
 
-  constructor (el) {
+  constructor(el) {
     var self = this
     self.element = el
     self.views = []
@@ -36,7 +36,7 @@ export default class Navigator {
     hammer.on('panend pancancel', Hammer.bindFn(this.onPanEnd, this))
   }
 
-  onPanStart (ev) {
+  onPanStart(ev) {
     // 每一次panstart都初始化一次,保证panFromLeft默认是false
     this.panFromLeft = false
     // 如果不是单个手指操作，直接不响应
@@ -61,7 +61,7 @@ export default class Navigator {
     }
     console.log('pan start-end--' + this.panFromLeft)
   }
-  onPan (ev) {
+  onPan(ev) {
     console.log('paning --' + this.panFromLeft)
     if (this.panFromLeft) {
       var delta = ev.deltaX
@@ -78,7 +78,7 @@ export default class Navigator {
     }
   }
 
-  onPanEnd (ev) {
+  onPanEnd(ev) {
     var self = this
     console.log('panend --' + this.panFromLeft)
     if (self.panFromLeft) {
@@ -93,7 +93,7 @@ export default class Navigator {
       beforeView.classList.add('anim')
       self.isPanAnimationEnd = false
 
-      function onEnd () {
+      function onEnd() {
         console.log('emit from pan end')
         currentView.classList.remove('anim')
         beforeView.classList.remove('anim')
@@ -118,7 +118,7 @@ export default class Navigator {
     }
   }
   // 避免重复处罚
-  push (obj) {
+  push(obj) {
     var now = new Date().getTime()
     if (now - this.holdTime > this._lastPopOrPushTime) {
       this._push.apply(this, arguments)
@@ -127,7 +127,7 @@ export default class Navigator {
       console.log('push间隔时间太短')
     }
   }
-  pop (num) {
+  pop(num) {
     var now = new Date().getTime()
     if (now - this.holdTime > this._lastPopOrPushTime) {
       this._pop.apply(this, arguments)
@@ -136,7 +136,7 @@ export default class Navigator {
       console.log('pop间隔时间太短，可以使用pop(n)来执行多个pop')
     }
   }
-  _push (obj) {
+  _push(obj) {
     var self = this
     var views = self.views
     var vm = new Vue(obj)
@@ -150,7 +150,7 @@ export default class Navigator {
 
     var end = 0
 
-    function onEnd () {
+    function onEnd() {
       if (end === 2) {
         newView.classList.remove('pt-page-moveFromRight')
         newView.removeChild(newView.querySelector('.x-mask'))
@@ -160,14 +160,14 @@ export default class Navigator {
       }
     }
 
-    function newViewAnimEnd () {
+    function newViewAnimEnd() {
       newView.removeEventListener(animEndEventName, newViewAnimEnd)
       console.log('push1')
       end++
       onEnd()
     }
 
-    function preViewAnimEnd () {
+    function preViewAnimEnd() {
       preview.removeEventListener(animEndEventName, preViewAnimEnd)
       console.log('push2')
       end++
@@ -182,7 +182,7 @@ export default class Navigator {
       newView.addEventListener(animEndEventName, newViewAnimEnd)
       preview.addEventListener(animEndEventName, preViewAnimEnd)
       // 解决safari上的白屏问题
-      setTimeout(function () {
+      setTimeout(function() {
         newView.className = className + ' pt-page-moveFromRight'
         preview.classList.add('pt-page-moveToLeft')
       }, 10)
@@ -194,7 +194,7 @@ export default class Navigator {
     this.vms.push(vm)
     this.element.appendChild(newView)
   }
-  onPop () {
+  onPop() {
     var views = this.views
     var current = views.pop()
     var preView = views[views.length - 1]
@@ -204,7 +204,7 @@ export default class Navigator {
     this.vms.pop().$destroy()
     this.element.removeChild(current)
   }
-  _pop (num) {
+  _pop(num) {
     console.log(new Date().getTime())
     var views = this.views
     var ctrl = this
@@ -218,20 +218,20 @@ export default class Navigator {
     }
     var end = 0
 
-    function onEnd () {
+    function onEnd() {
       if (end === 2) {
         ctrl.onPop()
       }
     }
 
-    function currentAnimEnd () {
+    function currentAnimEnd() {
       console.log('pop1')
       current.removeEventListener(animEndEventName, currentAnimEnd)
       end++
       onEnd()
     }
 
-    function preViewAnimEnd () {
+    function preViewAnimEnd() {
       console.log('pop2')
       preView.removeEventListener(animEndEventName, preViewAnimEnd)
       preView.removeChild(preView.querySelector('.x-mask'))

@@ -21,7 +21,9 @@
     "constructor-super": "warn",
     "valid-typeof": "warn",
     "no-extend-native": "off",
-    "no-inner-declarations": "off"
+    "no-inner-declarations": "off",
+    //函数后面一直没有空格
+    "space-before-function-paren":["error", "never"]
   },
   "globals": {
     "nav":true
