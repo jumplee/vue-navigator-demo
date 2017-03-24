@@ -1,7 +1,6 @@
 <template>
 
   <div class="x-tab-panels">
-
     <keep-alive>
       <component class="x-tab-panel" :is="currentView"></component>
     </keep-alive>

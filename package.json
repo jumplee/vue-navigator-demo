@@ -8,14 +8,18 @@
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
     "lint": "eslint ./src",
-    "sass": "sass ./sass/main.scss ./static/css/main.css"
+    "sass": "sass ./sass/main.scss:./static/css/main.css",
+    "watch_sass": "sass --watch ./sass/main.scss:./static/css/main.css"
   },
-  "pre-commit": [
-    "lint"
-  ],
+//  "pre-commit": [
+//    "lint"
+//  ],
   "dependencies": {
+    "es6-promise": "^4.1.0",
     "hammerjs": "^2.0.8",
-    "vue": "^2.1.10"
+    "vue": "^2.1.10",
+    "vue-scroller": "^2.1.2",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

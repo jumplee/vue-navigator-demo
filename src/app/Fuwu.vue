@@ -1,14 +1,22 @@
 <template>
   <div class="hello">
-    <NavBar title="服务">
-      <Btn icon="add" style="right:5px;" @click="gotoNext"></Btn>
-    </NavBar>
+    <nav-bar title="服务">
+      <btn icon="add" style="right:5px;" @click="gotoNext"></btn>
+    </nav-bar>
+    <div class="inner">
+      <scroller
+        :on-refresh="refresh"
+        :on-infinite="infinite"
+        ref="my_scroller">
+        nihao
+      </scroller>
+    </div>
+
   </div>
 </template>
 <script>
-  import NavBar from '../com/NavBar'
-  import Back from '../com/Back'
-  import Btn from '../com/Btn'
+
+  import scroller from 'vue-scroller'
   var Hello = {
     data() {
       return {
@@ -16,9 +24,7 @@
       }
     },
     components: {
-      NavBar,
-      Back,
-      Btn
+      scroller
     },
     methods: {
       back() {
@@ -26,6 +32,12 @@
       },
       gotoNext() {
         nav.push(Hello)
+      },
+      refresh(...args){
+          console.log(args)
+      },
+      infinite(...args){
+        console.log(args)
       }
     }
   }
@@ -38,7 +50,11 @@
     font-size: 10em;
     text-align: center;
   }
-
+  .inner{
+    position: relative;
+    flex:1;
+    border:1px solid red;
+  }
   button {
     padding: 15px;
     font-size: 18px;

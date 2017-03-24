@@ -36,19 +36,21 @@
 
 .pt-page-moveToLeft {
   /*animation:moveToLeft .6s cubic-bezier(0, 0.39, 0.25, 1) both;*/
-  animation: moveToLeft 0.4s cubic-bezier(0.1, 0.81, 1, 1) both; }
+  animation: moveToLeft 0.4s cubic-bezier(0.1, 0.81, 1, 1) both;
+  animation: moveToLeft .4s ease both; }
 
 .pt-page-moveFromRight {
   /*animation: moveFromRight .6s cubic-bezier(0, 0.39, 0.25, 1) both;*/
-  animation: moveFromRight 0.4s cubic-bezier(0.1, 0.81, 1, 1) both; }
+  animation: moveFromRight 0.4s cubic-bezier(0.1, 0.81, 1, 1) both;
+  animation: moveFromRight .4s ease both; }
 
 .pt-page-moveFromLeft {
-  -webkit-animation: moveFromLeft .6s ease both;
-  animation: moveFromLeft .6s ease both; }
+  -webkit-animation: moveFromLeft .4s ease both;
+  animation: moveFromLeft .4s ease both; }
 
 .pt-page-moveToRight {
-  -webkit-animation: moveToRight .6s ease both;
-  animation: moveToRight .6s ease both; }
+  -webkit-animation: moveToRight .4s ease both;
+  animation: moveToRight .4s ease both; }
 
 /********************************* keyframes **************************************/
 /* move from / to  */
@@ -64,7 +66,7 @@
     transform: translateX(-100%); } }
 @keyframes moveFromLeft {
   from {
-    transform: translateX(-50%); }
+    transform: translateX(-100%); }
   to {
     transform: translateX(0%); } }
 @-webkit-keyframes moveToRight {

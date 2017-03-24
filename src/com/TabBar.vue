@@ -6,7 +6,7 @@
 
 <script>
   export default {
-
+    name:'tab-bar',
     components: {
 
     },
@@ -32,6 +32,8 @@
   // width: 100%;
   overflow: auto;
   flex:1;
+  display: flex;
+  flex-direction: column;
 }
   .x-tab-bar {
     border-top: 1px solid #eee;
