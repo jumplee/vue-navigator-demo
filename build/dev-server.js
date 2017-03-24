@@ -1,7 +1,7 @@
 require('./check-versions')()
 
 var config = require('../config')
-if (!process.env.NODE_ENV) {
+if (!process.env.NODE_ENV){
   process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
 }
 
@@ -32,17 +32,17 @@ var hotMiddleware = require('webpack-hot-middleware')(compiler, {
   log: () => {}
 })
 // force page reload when html-webpack-plugin template changes
-compiler.plugin('compilation', function (compilation) {
-  compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
+compiler.plugin('compilation', function(compilation){
+  compilation.plugin('html-webpack-plugin-after-emit', function(data, cb){
     hotMiddleware.publish({ action: 'reload' })
     cb()
   })
 })
 
 // proxy api requests
-Object.keys(proxyTable).forEach(function (context) {
+Object.keys(proxyTable).forEach(function(context){
   var options = proxyTable[context]
-  if (typeof options === 'string') {
+  if (typeof options === 'string'){
     options = { target: options }
   }
   app.use(proxyMiddleware(options.filter || context, options))
@@ -61,21 +61,32 @@ app.use(hotMiddleware)
 // serve pure static assets
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
+function getIPAdress(){
+  var interfaces = require('os').networkInterfaces()
+  for(var devName in interfaces){
+    var iface = interfaces[devName]
+    for(var i = 0; i < iface.length; i++){
+      var alias = iface[i]
+      if(alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal){
+        return alias.address
+      }
+    }
+  }
+}
+var uri = 'http://' + getIPAdress() + ':' + port
 
-var uri = 'http://localhost:' + port
-
-devMiddleware.waitUntilValid(function () {
+devMiddleware.waitUntilValid(function(){
   console.log('> Listening at ' + uri + '\n')
 })
 
-module.exports = app.listen(port, function (err) {
-  if (err) {
+module.exports = app.listen(port, function(err){
+  if (err){
     console.log(err)
     return
   }
 
   // when env is testing, don't need open it
-  if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
+  if (autoOpenBrowser && process.env.NODE_ENV !== 'testing'){
     opn(uri)
   }
 })
