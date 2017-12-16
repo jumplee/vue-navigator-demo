@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name:'tab-bar',
+    name: 'tab-bar',
     components: {
 
     },
@@ -18,30 +18,32 @@
 </script>
 
 <style lang="scss">
-.x-tab-panels{
-  position: relative;
+  .x-tab-panels {
+    position: relative;
     width: 100%;
-    height:100%;
+    height: 100%;
     display: flex;
-    flex-flow:column;
-}
-.x-tab-panel{
-  // position: absolute;
-  // bottom:60px;
-  // top:0;
-  // width: 100%;
-  overflow: auto;
-  flex:1;
-  display: flex;
-  flex-direction: column;
-}
+    flex-flow: column;
+  }
+
+  .x-tab-panel {
+    // position: absolute;
+    // bottom:60px;
+    // top:0;
+    // width: 100%;
+    overflow: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
   .x-tab-bar {
     border-top: 1px solid #eee;
     display: flex;
     background: #fafafa;
     width: 100%;
     text-align: center;
-    padding:6px 0;
+    padding: 6px 0;
     color: #555555;
   }
 
@@ -54,7 +56,8 @@
   }
 
   .x-tab-bar_title {
-    padding-top:5px;
-    font-size:14px;
+    padding-top: 5px;
+    font-size: 14px;
   }
+
 </style>

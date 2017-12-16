@@ -1,10 +1,13 @@
 <template>
 
-  <div class="x-tab-panels">
-    <keep-alive>
-      <component class="x-tab-panel" :is="currentView"></component>
-    </keep-alive>
-        <Tab-bar>
+  <div class="x-tab-panels x-layout-flex">
+    <div class="x-inner">
+      <keep-alive>
+        <component class="x-tab-panel" :is="currentView"></component>
+      </keep-alive>
+    </div>
+
+    <Tab-bar>
       <div :class="[currentView==='Index' ? 'active': '']" class="x-tab-bar_item" @click="changeView('Index')">
         <i :class="[currentView==='Index' ? 'icon-homefill': 'icon-home']" class="x-tab-bar_icon iconfont"></i>
         <div class="x-tab-bar_title">首页</div>

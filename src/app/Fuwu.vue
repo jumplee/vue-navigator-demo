@@ -1,24 +1,26 @@
 <template>
-  <div class="hello">
+  <div class="hello x-layout-flex">
     <nav-bar title="服务">
-      <btn icon="add" style="right:5px;" @click="gotoNext"></btn>
+      <Btn style="left:0;" icon="back" @click="back">返回</Btn>
+      <Btn icon="add" style="right:5px;" @click="gotoNext"></btn>
     </nav-bar>
-    <div class="inner">
-      <scroller
+    <div class="x-inner">
+      <scroll
         :on-refresh="refresh"
         :on-infinite="infinite"
-        ref="my_scroller">
+        :enableInfinite="!isNone">
         <div class="my-list">
           <div class="list-item" v-for="item in ListData">
             {{item.name}}
           </div>
         </div>
-      </scroller>
+      </scroll>
     </div>
 
   </div>
 </template>
 <script>
+
 let counter = 0
 function buildData(){
   const t = []
@@ -30,15 +32,18 @@ function buildData(){
   }
   return t
 }
-import scroller from 'vue-scroller'
+import Btn from '../com/Btn'
+import scroll from '../com/scroll/index'
 var Hello = {
   data(){
     return {
+      isNone: false,
       ListData: buildData()
     }
   },
   components: {
-    scroller
+    scroll,
+    Btn
   },
   methods: {
     back(){
@@ -47,24 +52,24 @@ var Hello = {
     gotoNext(){
       nav.push(Hello)
     },
-    refresh(...args){
+    refresh(done){
       const self = this
 
       setTimeout(() => {
         self.ListData = self.ListData.concat(buildData())
-        self.$refs.my_scroller.finishPullToRefresh()
+        done()
       }, 1000)
     },
-    infinite(...args){
+    infinite(done){
       const self = this
       setTimeout(() => {
         if(counter > 100){
-          self.$refs.my_scroller.finishInfinite(true)
+          self.isNone = true
         }else{
           self.ListData = self.ListData.concat(buildData())
-          self.$refs.my_scroller.finishInfinite()
+          done()
         }
-      }, 1500)
+      }, 1000)
     }
   }
 }
@@ -72,7 +77,7 @@ export default Hello
 
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
   h1 {
     font-size: 10em;
     text-align: center;
@@ -80,7 +85,6 @@ export default Hello
   .inner{
     position: relative;
     flex:1;
-    border:1px solid red;
   }
   button {
     padding: 15px;
@@ -90,5 +94,8 @@ export default Hello
   .list-item{
     padding:15px;
     border-bottom:1px solid #eee;
+  }
+  .hello{
+    height:100%;
   }
 </style>

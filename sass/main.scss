@@ -5,5 +5,17 @@ body {
   margin: 0;
   // 避免浏览器出现滚动条
   overflow: hidden;
-      -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
+}
+%x-layout-flex{
+  display: flex;
+  flex-direction: column;
+}
+.x-layout-flex{
+  @extend %x-layout-flex;
+  >.x-inner{
+    flex:1;
+    overflow: auto;
+    position:relative;
+  }
 }

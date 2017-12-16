@@ -1,7 +1,12 @@
 import Home from './Home'
 import Navigator from './Navigator'
 
-window.nav = new Navigator(document.getElementById('app'))
+// 解决一下触发延迟的问题
+require('./util/hammer-time.min.js')
+
+window.nav = new Navigator(document.getElementById('app'), {
+  swipeBack: true
+})
 window.nav.push(Home)
 
 import Vue from 'vue'

@@ -6,6 +6,10 @@ Array.prototype.last = function(){
   return this[this.length - 1]
 }
 
+function log(){
+  console.log.apply(this, arguments)
+}
+
 var animEndEventNames = {
   'WebkitAnimation': 'webkitAnimationEnd',
   'OAnimation': 'oAnimationEnd',
@@ -21,6 +25,7 @@ export default class Navigator{
     self.views = []
     // vue组件列表
     self.vms = []
+    // 是否支持从左侧拖拽返回
     self.panFromLeft = false
     self.isPanAnimationEnd = true
     self.holdTime = 500
@@ -47,10 +52,10 @@ export default class Navigator{
     }
 
     var x = ev.pointers[0].x || ev.pointers[0].screenX
-    console.log('pan start---' + this.panFromLeft)
+    log('pan start---' + this.panFromLeft)
     // 如果动画没有执行完,不接受任何新的手势逻辑
     if (!this.isPanAnimationEnd){
-      console.log('pan动画没有执行完')
+      log('pan动画没有执行完')
       return false
     }
 
@@ -61,10 +66,10 @@ export default class Navigator{
       beforeView.classList.add('x-page-current')
       beforeView.style.transform = 'translateX(-100px)'
     }
-    console.log('pan start-end--' + this.panFromLeft)
+    log('pan start-end--' + this.panFromLeft)
   }
   onPan(ev){
-    console.log('paning --' + this.panFromLeft)
+    log('paning --' + this.panFromLeft)
     if (this.panFromLeft){
       var delta = ev.deltaX
       var beforeViewDelta = ((delta / 3) - 100)
@@ -82,7 +87,7 @@ export default class Navigator{
 
   onPanEnd(ev){
     var self = this
-    console.log('panend --' + this.panFromLeft)
+    log('panend --' + this.panFromLeft)
     if (self.panFromLeft){
       var delta = ev.deltaX
       var percent = delta * 100 / document.body.clientWidth
@@ -96,7 +101,7 @@ export default class Navigator{
       self.isPanAnimationEnd = false
 
       function onEnd(){
-        console.log('emit from pan end')
+        log('emit from pan end')
         currentView.classList.remove('anim')
         beforeView.classList.remove('anim')
         // 执行pop操作
@@ -126,7 +131,7 @@ export default class Navigator{
       this._push.apply(this, arguments)
       this._lastPopOrPushTime = now
     } else {
-      console.log('push间隔时间太短')
+      log('push间隔时间太短')
     }
   }
   pop(num){
@@ -135,7 +140,7 @@ export default class Navigator{
       this._pop.apply(this, arguments)
       this._lastPopOrPushTime = now
     } else {
-      console.log('pop间隔时间太短，可以使用pop(n)来执行多个pop')
+      log('pop间隔时间太短，可以使用pop(n)来执行多个pop')
     }
   }
   _push(obj){
@@ -164,14 +169,14 @@ export default class Navigator{
 
     function newViewAnimEnd(){
       newView.removeEventListener(animEndEventName, newViewAnimEnd)
-      console.log('push1')
+      log('push1')
       end++
       onEnd()
     }
 
     function preViewAnimEnd(){
       preview.removeEventListener(animEndEventName, preViewAnimEnd)
-      console.log('push2')
+      log('push2')
       end++
       onEnd()
     }
@@ -207,7 +212,7 @@ export default class Navigator{
     this.element.removeChild(current)
   }
   _pop(num){
-    console.log(new Date().getTime())
+    log(new Date().getTime())
     var views = this.views
     var ctrl = this
     var preView = views[views.length - 2]
@@ -215,7 +220,7 @@ export default class Navigator{
 
     // 没有那么多view就不执行pop
     if (views.length < 2 || views.length <= num){
-      console.log('pop的数量过多')
+      log('pop的数量过多')
       return false
     }
     var end = 0
@@ -227,14 +232,14 @@ export default class Navigator{
     }
 
     function currentAnimEnd(){
-      console.log('pop1')
+      log('pop1')
       current.removeEventListener(animEndEventName, currentAnimEnd)
       end++
       onEnd()
     }
 
     function preViewAnimEnd(){
-      console.log('pop2')
+      log('pop2')
       preView.removeEventListener(animEndEventName, preViewAnimEnd)
       preView.removeChild(preView.querySelector('.x-mask'))
       end++

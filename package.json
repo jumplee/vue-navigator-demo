@@ -11,7 +11,7 @@
     "sass": "sass ./sass/main.scss:./static/css/main.css",
     "watch_sass": "sass --watch ./sass/main.scss:./static/css/main.css"
   },
-  "//":{
+  "//": {
     "pre-commit": [
       "lint"
     ]
