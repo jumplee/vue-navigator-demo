@@ -2,9 +2,18 @@
 
   <div class="x-tab-panels x-layout-flex">
     <div class="x-inner">
-      <keep-alive>
-        <component class="x-tab-panel" :is="currentView"></component>
-      </keep-alive>
+      <div class="x-tab-panel" v-show="currentView==='Index'">
+        <Index/>
+      </div>
+      <div class="x-tab-panel" v-show="currentView==='Fuwu'">
+        <Fuwu/>
+      </div>
+      <div class="x-tab-panel" v-show="currentView==='Cart'">
+        <Cart/>
+      </div>
+      <div class="x-tab-panel" v-show="currentView==='My'">
+        <My/>
+      </div>
     </div>
 
     <Tab-bar>
@@ -45,7 +54,7 @@
     },
     data() {
       return {
-        currentView: 'Index'
+        currentView: 'Fuwu'
       }
     },
     methods: {

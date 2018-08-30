@@ -10,7 +10,6 @@
       position: absolute;
       top: 0;
       left: 0;
-      visibility: hidden;
       overflow: hidden;
       z-index:1;
       transform: translateX(0);
@@ -25,7 +24,13 @@
       transition: transform .3s;
     }
     .x-page.x-page-current{
-      visibility: visible;
+      position: relative;
+    }
+    .x-page-pre{
+
+    }
+    .x-page.x-page-new{
+      transform: translateX(-100%);
     }
     .x-mask{
       position: absolute;

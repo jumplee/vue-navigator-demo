@@ -1,9 +1,9 @@
 <template>
   <div class="hello x-layout-flex">
-    <nav-bar title="服务">
+    <NavBar title="服务">
       <Btn style="left:0;" icon="back" @click="back">返回</Btn>
       <Btn icon="add" style="right:5px;" @click="gotoNext"></btn>
-    </nav-bar>
+    </NavBar>
     <div class="x-inner">
       <scroll
         :on-refresh="refresh"
@@ -20,7 +20,8 @@
   </div>
 </template>
 <script>
-
+  import NavBar from '../com/NavBar'
+  import Back from '../com/Back'
 let counter = 0
 function buildData(){
   const t = []
@@ -43,7 +44,8 @@ var Hello = {
   },
   components: {
     scroll,
-    Btn
+    Btn,
+    NavBar
   },
   methods: {
     back(){

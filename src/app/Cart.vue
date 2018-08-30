@@ -2,14 +2,17 @@
   <div class="hello">
     <NavBar title="购物车">
     </NavBar>
-    <div class="cart-list">
-      <div class="cart-list-item" v-for="item in goodList">
-        <img class="item-img" src="null" alt="">
-        <div class="item-content">
-            <h2>{{item.name}}</h2>
+    <div class="nav-panel">
+      <div class="cart-list">
+        <div class="cart-list-item" v-for="item in goodList">
+          <img class="item-img" src="null" alt="">
+          <div class="item-content">
+              <h2>{{item.name}}</h2>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 <script>

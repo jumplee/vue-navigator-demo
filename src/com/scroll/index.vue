@@ -69,16 +69,16 @@
         this.touching = true
       },
       touchMove(e) {
-        if (!this.enableRefresh || this.$el.scrollTop > 0 || !this.touching) {
-          return
-        }
+        // if (!this.enableRefresh || this.$el.scrollTop > 0 || !this.touching) {
+        //   return
+        // }
         let diff = e.targetTouches[0].pageY - this.startY - this.startScroll
         if (diff > 0) e.preventDefault()
         this.top = Math.pow(diff, 0.8) + (this.state === 2 ? this.offset : 0)
 
-        if (this.state === 2) { // in refreshing
-          return
-        }
+        // if (this.state === 2) { // in refreshing
+        //   return
+        // }
         if (this.top >= this.offset) {
           this.state = 1
         } else {
@@ -86,7 +86,7 @@
         }
       },
       touchEnd(e) {
-        if (!this.enableRefresh) return
+        // if (!this.enableRefresh) return
         this.touching = false
         if (this.state === 2) { // in refreshing
           this.state = 2

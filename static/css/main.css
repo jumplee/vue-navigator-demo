@@ -8,7 +8,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  visibility: hidden;
   overflow: hidden;
   z-index: 1;
   transform: translateX(0);
@@ -23,7 +22,10 @@
   transition: transform .3s; }
 
 .x-page.x-page-current {
-  visibility: visible; }
+  position: relative; }
+
+.x-page.x-page-new {
+  transform: translateX(-100%); }
 
 .x-mask {
   position: absolute;
@@ -59,23 +61,30 @@
     -webkit-transform: translateX(0%); }
   to {
     -webkit-transform: translateX(-100%); } }
+
 @keyframes moveToLeft {
   from {
     transform: translateX(0%); }
   to {
     transform: translateX(-100%); } }
+
 @keyframes moveFromLeft {
   from {
     transform: translateX(-100%); }
   to {
     transform: translateX(0%); } }
+
 @-webkit-keyframes moveToRight {
+  from { }
   to {
     -webkit-transform: translateX(100%); } }
+
 @keyframes moveToRight {
+  from { }
   to {
     -webkit-transform: translateX(100%);
     transform: translateX(100%); } }
+
 @-webkit-keyframes moveFromRight {
   from {
     -webkit-transform: translateX(100%);
@@ -83,6 +92,7 @@
   to {
     -webkit-transform: translateX(0%);
     /*transform:translateX(0%)*/ } }
+
 @keyframes moveFromRight {
   from {
     -webkit-transform: translateX(100%);
@@ -90,8 +100,11 @@
   to {
     -webkit-transform: translateX(0%);
     transform: translateX(0%); } }
+
 html,
 body {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-user-select: none;
   height: 100%;
   margin: 0;
   overflow: hidden;
@@ -105,5 +118,3 @@ body {
   flex: 1;
   overflow: auto;
   position: relative; }
-
-/*# sourceMappingURL=main.css.map */
