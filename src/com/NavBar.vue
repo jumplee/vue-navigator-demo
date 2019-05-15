@@ -43,5 +43,8 @@ $height:48px;
   top:1px;
   width:100%;
 }
-
+/* .x-iOS .x-nav-bar{
+  padding-top:20px;
+  height:68px;
+} */
 </style>

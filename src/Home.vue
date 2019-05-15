@@ -54,7 +54,7 @@
     },
     data() {
       return {
-        currentView: 'Fuwu'
+        currentView: 'Index'
       }
     },
     methods: {

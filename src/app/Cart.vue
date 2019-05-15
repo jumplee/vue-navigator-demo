@@ -2,6 +2,9 @@
   <div class="hello">
     <NavBar title="购物车">
     </NavBar>
+    <div class="x-inner">
+
+    </div>
     <div class="nav-panel">
       <div class="cart-list">
         <div class="cart-list-item" v-for="item in goodList">

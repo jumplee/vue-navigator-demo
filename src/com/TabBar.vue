@@ -20,19 +20,11 @@
 <style lang="scss">
   .x-tab-panels {
     position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-flow: column;
   }
 
   .x-tab-panel {
-    // position: absolute;
-    // bottom:60px;
-    // top:0;
-    // width: 100%;
     overflow: auto;
-    flex: 1;
+    height: 100%;
     display: flex;
     flex-direction: column;
   }
@@ -43,12 +35,12 @@
     background: #fafafa;
     width: 100%;
     text-align: center;
-    padding: 6px 0;
     color: #555555;
   }
 
   .x-tab-bar_item {
     flex: 1;
+    padding: 6px 0;
   }
 
   .x-tab-bar_icon {

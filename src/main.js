@@ -1,12 +1,21 @@
 import Home from './Home'
 import Navigator from './Navigator'
-
+import func from './util/fun'
 // 解决一下触发延迟的问题
-require('./util/hammer-time.min.js')
-
+var fastClick = require('fastclick');
+fastClick.attach(document.body);
+require('../sass/main.scss')
 window.nav = new Navigator(document.getElementById('app'), {
   swipeBack: true
 })
+
+var platform=func.platform()
+if(platform.iOS){
+  document.body.classList.add('x-iOS')
+}else{
+  document.body.classList.add('x-android')
+}
+
 window.nav.push(Home)
 
 import Vue from 'vue'

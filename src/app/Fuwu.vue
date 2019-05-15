@@ -1,6 +1,6 @@
 <template>
-  <div class="hello x-layout-flex">
-    <NavBar title="服务">
+  <div class="x-layout-flex">
+    <NavBar title="首页">
       <Btn style="left:0;" icon="back" @click="back">返回</Btn>
       <Btn icon="add" style="right:5px;" @click="gotoNext"></btn>
     </NavBar>
