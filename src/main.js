@@ -1,9 +1,7 @@
 import Home from './Home'
 import Navigator from './Navigator'
 import func from './util/fun'
-// 解决一下触发延迟的问题
-var fastClick = require('fastclick');
-fastClick.attach(document.body);
+
 require('../sass/main.scss')
 window.nav = new Navigator(document.getElementById('app'), {
   swipeBack: true
