@@ -1,0 +1,6 @@
+{
+  "appId": "com.dl.lee",
+  "appName": "vue-navigator-demo",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

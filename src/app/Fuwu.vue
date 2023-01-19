@@ -8,7 +8,8 @@
       <scroll
         :on-refresh="refresh"
         :on-infinite="infinite"
-        :enableInfinite="!isNone">
+        :is-end="isNone"
+      >
         <div class="my-list">
           <div class="list-item" v-for="item in ListData">
             {{item.name}}

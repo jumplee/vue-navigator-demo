@@ -3,11 +3,11 @@ import Vue from 'vue'
 import Hammer from 'hammerjs'
 require('./util/modernizr-custom')
 
-function last(array) {
+function last(array){
   return array[array.length - 1]
 }
 
-function log() {
+function log(){
   console.trace.apply(this, arguments)
 }
 
@@ -18,9 +18,9 @@ var animEndEventNames = {
   'animation': 'animationend'
 }
 var animEndEventName = animEndEventNames[Modernizr.prefixed('animation')]
-export default class Navigator {
+export default class Navigator{
 
-  constructor(el, options = {}) {
+  constructor(el, options = {}){
     var self = this
     self.element = el
     self.views = []
@@ -31,7 +31,7 @@ export default class Navigator {
     self.isPanAnimationEnd = true
     self.holdTime = 500
     self._lastPopOrPushTime = 0
-    if (options.swipeBack) {
+    if (options.swipeBack){
       const hammer = new Hammer.Manager(el)
       self.hammer = hammer
       hammer.add(new Hammer.Pan({
@@ -44,18 +44,18 @@ export default class Navigator {
     }
   }
 
-  onPanStart(ev) {
+  onPanStart(ev){
     // 每一次panstart都初始化一次,保证panFromLeft默认是false
     this.panFromLeft = false
     // 如果不是单个手指操作，直接不响应
-    if (ev.pointers.length !== 1) {
+    if (ev.pointers.length !== 1){
       return false
     }
 
     var x = ev.pointers[0].x || ev.pointers[0].screenX
     log('pan start---' + this.panFromLeft)
     // 如果动画没有执行完,不接受任何新的手势逻辑
-    if (!this.isPanAnimationEnd) {
+    if (!this.isPanAnimationEnd){
       log('pan动画没有执行完')
       return false
     }
@@ -63,33 +63,30 @@ export default class Navigator {
     // 第一屏页面不需要处理
     if (this.views.length > 1 &&
       // 左侧小于50范围内才可以拖拽
-      x < 50) {
-
-      this.panFromLeft=true
-
+      x < 50){
+      this.panFromLeft = true
     }
-
   }
-  onPan(ev) {
-    if (!this.panFromLeft) {
+  onPan(ev){
+    if (!this.panFromLeft){
       return false
     }
 
-      var delta = ev.deltaX
-      var beforeViewDelta = 0
+    var delta = ev.deltaX
+    var beforeViewDelta = 0
 
-      if (delta < 0) {
-        return
-      }
-      var views = this.views
-      var viewsLen = views.length
-      var currentView = last(views)
-      var beforeView = views[viewsLen - 2]
-      currentView.style.transform = 'translateX(' + delta + 'px)'
-      beforeView.style.transform = 'translateX(' + beforeViewDelta + 'px)'
+    if (delta < 0){
+      return
+    }
+    var views = this.views
+    var viewsLen = views.length
+    var currentView = last(views)
+    var beforeView = views[viewsLen - 2]
+    currentView.style.transform = 'translateX(' + delta + 'px)'
+    beforeView.style.transform = 'translateX(' + beforeViewDelta + 'px)'
   }
 
-  onPanEnd(ev) {
+  onPanEnd(ev){
     var self = this
     if(!this.panFromLeft){
       return false
@@ -101,26 +98,26 @@ export default class Navigator {
     var currentView = last(views)
     var beforeView = views[viewsLen - 2]
 
-    if (!beforeView) {
+    if (!beforeView){
       return false
     }
     self.isPanAnimationEnd = false
 
-    function onEnd() {
+    function onEnd(){
       log('emit from pan end')
       currentView.className = 'x-page x-page-current'
       beforeView.className = 'x-page'
       // 执行pop操作
-      if (ev.type === 'panend' && percent > 30) {
+      if (ev.type === 'panend' && percent > 30){
         self.onPop()
       }
       self.isPanAnimationEnd = true
     }
 
-    currentView.style.transition='transform .3s ease'
-    beforeView.style.transition='transform .3s ease'
+    currentView.style.transition = 'transform .3s ease'
+    beforeView.style.transition = 'transform .3s ease'
     // 如果是panend且需要换页
-    if (ev.type === 'panend' && percent > 30) {
+    if (ev.type === 'panend' && percent > 30){
       currentView.style.transform = 'translateX(100%)'
       beforeView.style.transform = 'translateX(0px)'
     } else {
@@ -130,33 +127,33 @@ export default class Navigator {
     }
     setTimeout(function(){
       onEnd()
-    },100)
+    }, 100)
   }
 
-  push(obj) {
+  push(obj){
     // 避免重复触发
     var now = new Date().getTime()
-    if (now - this.holdTime > this._lastPopOrPushTime) {
+    if (now - this.holdTime > this._lastPopOrPushTime){
       this._push.apply(this, arguments)
       this._lastPopOrPushTime = now
     }
   }
-  pop(num) {
+  pop(num){
     // 避免重复触发
     var now = new Date().getTime()
-    if (now - this.holdTime > this._lastPopOrPushTime) {
+    if (now - this.holdTime > this._lastPopOrPushTime){
       this._pop.apply(this, arguments)
       this._lastPopOrPushTime = now
     }
   }
-  _push(obj) {
+  _push(obj){
     var self = this
     var views = self.views
     var vm = new Vue(obj)
     var newView = document.createElement('div')
     var preview = views[views.length - 1]
     newView.className = 'x-page x-page-new'
-    if (preview) {
+    if (preview){
       preview.className = 'x-page x-page-pre'
     }
 
@@ -166,8 +163,8 @@ export default class Navigator {
 
     var end = 0
 
-    function onEnd() {
-      if (end === 2) {
+    function onEnd(){
+      if (end === 2){
         newView.removeChild(newView.querySelector('.x-mask'))
         newView.className = 'x-page x-page-current'
         preview.className = 'x-page'
@@ -175,14 +172,14 @@ export default class Navigator {
       }
     }
 
-    function newViewAnimEnd() {
+    function newViewAnimEnd(){
       newView.removeEventListener(animEndEventName, newViewAnimEnd)
       log('push1')
       end++
       onEnd()
     }
 
-    function preViewAnimEnd() {
+    function preViewAnimEnd(){
       preview.removeEventListener(animEndEventName, preViewAnimEnd)
       log('push2')
       end++
@@ -190,19 +187,19 @@ export default class Navigator {
     }
 
     // 如果是第一个view，就不增加动画也没有mask
-    if (views.length > 0) {
+    if (views.length > 0){
       var mask = document.createElement('div')
       mask.className = 'x-mask'
       newView.appendChild(mask)
       newView.addEventListener(animEndEventName, newViewAnimEnd)
       preview.addEventListener(animEndEventName, preViewAnimEnd)
       // 解决safari上的白屏问题
-      setTimeout(function () {
+      setTimeout(function(){
         newView.classList.add('pt-page-moveFromRight')
         preview.classList.add('pt-page-moveToLeft')
       }, 10)
     } else {
-      //第一次push 只需要增加x-page-current class 就好
+      // 第一次push 只需要增加x-page-current class 就好
       newView.className = 'x-page x-page-current'
     }
     // 需要在最后执行
@@ -210,14 +207,14 @@ export default class Navigator {
     this.vms.push(vm)
     this.element.appendChild(newView)
   }
-  onPop() {
+  onPop(){
     var views = this.views
     var current = views.pop()
     // 销毁老的组件,避免内存问题
     this.vms.pop().$destroy()
     this.element.removeChild(current)
   }
-  _pop(num) {
+  _pop(num){
     log(new Date().getTime())
     var views = this.views
     var ctrl = this
@@ -225,26 +222,26 @@ export default class Navigator {
     var current = views[views.length - 1]
 
     // 没有那么多view就不执行pop
-    if (views.length < 2 || views.length <= num) {
+    if (views.length < 2 || views.length <= num){
       log('pop的数量过多')
       return false
     }
     var end = 0
 
-    function onEnd() {
-      if (end === 2) {
+    function onEnd(){
+      if (end === 2){
         ctrl.onPop()
       }
     }
 
-    function currentAnimEnd() {
+    function currentAnimEnd(){
       log('pop1')
       current.removeEventListener(animEndEventName, currentAnimEnd)
       end++
       onEnd()
     }
 
-    function preViewAnimEnd() {
+    function preViewAnimEnd(){
       log('pop2')
       preView.removeEventListener(animEndEventName, preViewAnimEnd)
       preView.removeChild(preView.querySelector('.x-mask'))

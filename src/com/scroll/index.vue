@@ -18,8 +18,13 @@
       <slot></slot>
       <div class="infinite-layer" v-if="enableInfinite">
         <slot name="infinite">
-          <div class="infinite-preloader"></div>
-          <div>加载中...</div>
+          <template v-if="isEnd">
+            <div>{{loadingText.end}}</div>
+          </template>
+          <template v-else>
+            <div class="infinite-preloader"></div>
+            <div>{{loadingText.loading}}</div>
+          </template>
         </slot>
       </div>
     </div>
@@ -50,85 +55,100 @@
         type: Function,
         default: undefined,
         require: false
+      },
+      isEnd: {
+        type: Boolean,
+        default: false
+      },
+      loadingText: {
+        type: Object,
+        default: function(){
+          return {
+            loading: '加载中...',
+            end: '暂无数据'
+          }
+        }
       }
     },
-    data() {
+    data(){
       return {
         top: 0,
         state: 0, // 0:down, 1: up, 2: refreshing
         startY: 0,
         touching: false,
-
+        loadingText: '加载中...',
         infiniteLoading: false
       }
     },
+    watch: {
+    },
     methods: {
-      touchStart(e) {
+      touchStart(e){
         this.startY = e.targetTouches[0].pageY
         this.startScroll = this.$el.scrollTop || 0
         this.touching = true
       },
-      touchMove(e) {
+      touchMove(e){
         // if (!this.enableRefresh || this.$el.scrollTop > 0 || !this.touching) {
         //   return
         // }
-        let diff = e.targetTouches[0].pageY - this.startY - this.startScroll
+        const diff = e.targetTouches[0].pageY - this.startY - this.startScroll
         if (diff > 0) e.preventDefault()
         this.top = Math.pow(diff, 0.8) + (this.state === 2 ? this.offset : 0)
 
         // if (this.state === 2) { // in refreshing
         //   return
         // }
-        if (this.top >= this.offset) {
+        if (this.top >= this.offset){
           this.state = 1
         } else {
           this.state = 0
         }
       },
-      touchEnd(e) {
+      touchEnd(e){
         // if (!this.enableRefresh) return
         this.touching = false
-        if (this.state === 2) { // in refreshing
+        if (this.state === 2){ // in refreshing
           this.state = 2
           this.top = this.offset
           return
         }
-        if (this.top >= this.offset) { // do refresh
+        if (this.top >= this.offset){ // do refresh
           this.refresh()
         } else { // cancel refresh
           this.state = 0
           this.top = 0
         }
       },
-      refresh() {
+      refresh(){
         this.state = 2
         this.top = this.offset
         this.onRefresh(this.refreshDone)
       },
-      refreshDone() {
+      refreshDone(){
         this.state = 0
         this.top = 0
       },
 
-      infinite() {
+      infinite(){
         this.infiniteLoading = true
         this.onInfinite(this.infiniteDone)
       },
 
-      infiniteDone() {
+      infiniteDone(){
         this.infiniteLoading = false
       },
 
-      onScroll(e) {
-        if (!this.enableInfinite || this.infiniteLoading) {
+      onScroll(e){
+        if (!this.enableInfinite || this.infiniteLoading){
           return
         }
-        let outerHeight = this.$el.clientHeight
-        let innerHeight = this.$el.querySelector('.scroll-inner').clientHeight
-        let scrollTop = this.$el.scrollTop
-        let ptrHeight = this.onRefresh ? this.$el.querySelector('.pull-to-refresh-layer').clientHeight : 0
-        let infiniteHeight = this.$el.querySelector('.infinite-layer').clientHeight
-        let bottom = innerHeight - outerHeight - scrollTop - ptrHeight
+        const outerHeight = this.$el.clientHeight
+        const innerHeight = this.$el.querySelector('.scroll-inner').clientHeight
+        const scrollTop = this.$el.scrollTop
+        const ptrHeight = this.onRefresh ? this.$el.querySelector('.pull-to-refresh-layer').clientHeight : 0
+        const infiniteHeight = this.$el.querySelector('.infinite-layer').clientHeight
+        const bottom = innerHeight - outerHeight - scrollTop - ptrHeight
 
         if (bottom < infiniteHeight) this.infinite()
       }

@@ -23,7 +23,7 @@ $height:48px;
   height: $height;
   box-sizing:border-box;
   text-align: center;
-
+  //padding-top:env(safe-area-inset-bottom);
   .x-btn{
     position: absolute;
     top:0px;
@@ -43,8 +43,5 @@ $height:48px;
   top:1px;
   width:100%;
 }
-/* .x-iOS .x-nav-bar{
-  padding-top:20px;
-  height:68px;
-} */
+
 </style>
